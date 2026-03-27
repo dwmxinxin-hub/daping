@@ -14,15 +14,18 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
 
       - name: Install Pake
         run: npm install -g pake-cli
 
+      - name: Check files
+        run: dir
+
       - name: Build EXE
         run: pake .\MEXCCRM.html --name "MEXCCRM" --use-local-file --keep-binary
 
-      - name: Upload
+      - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
           name: MEXCCRM-build
