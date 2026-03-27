@@ -1,1 +1,31 @@
+name: Build EXE with Pake
 
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: 下载仓库代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 安装 Pake
+        run: npm install -g pake-cli
+
+      - name: 打包 HTML 为 EXE
+        run: pake .\MEXCCRM.html --name "MEXCCRM" --use-local-file --keep-binary
+
+      - name: 上传打包结果
+        uses: actions/upload-artifact@v4
+        with:
+          name: MEXCCRM-build
+          path: |
+            **/*.exe
+            **/*.msi
